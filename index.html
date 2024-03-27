@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Age & Basic Calculator</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<!-- Age Calculator -->
+<div class="container" id="age-left">
+  <h2 class="calc">Age Calculator</h2>
+  <form class="calculator" name="ageCalc">
+    <input type="number" placeholder="Year of Birth" id="birthYear">
+    <input type="number" placeholder="Current Year" id="currentYear">
+    <button type="button" onclick="calculateAge()">Calculate Age</button>
+    <input type="text" readonly class="value" id="ageResult">
+  </form>
+</div>
+
+<!-- Basic Calculator -->
+<div class="container" id="bs-left">
+  <h2 class="calc">Basic Calculator</h2>
+  <form class="calculator" name="calc">
+    <textarea name="txt" readonly class="value" rows="3"></textarea>
+    <span class="num clear" onclick="clearDisplay()">c</span>
+    <span class="num" onclick="appendToDisplay('/')">/</span>
+    <span class="num" onclick="appendToDisplay('*')">*</span>
+    <span class="num" onclick="appendToDisplay('7')">7</span>
+    <span class="num" onclick="appendToDisplay('8')">8</span>
+    <span class="num" onclick="appendToDisplay('9')">9</span>
+    <span class="num" onclick="appendToDisplay('-')">-</span>
+    <span class="num" onclick="appendToDisplay('4')">4</span>
+    <span class="num" onclick="appendToDisplay('5')">5</span>
+    <span class="num" onclick="appendToDisplay('6')">6</span>
+    <span class="num plus" onclick="appendToDisplay('+')">+</span>
+    <span class="num" onclick="appendToDisplay('1')">1</span>
+    <span class="num" onclick="appendToDisplay('2')">2</span>
+    <span class="num" onclick="appendToDisplay('3')">3</span>
+    <span class="num" onclick="appendToDisplay('0')">0</span>
+    <span class="num" onclick="appendToDisplay('00')">00</span>
+    <span class="num" onclick="appendToDisplay('.')">.</span>
+    <span class="num equal" onclick="calculate()">=</span>
+  </form>
+</div>
+
+<script>
+  // Age Calculator function
+  function calculateAge() {
+    const birthYear = parseInt(document.getElementById('birthYear').value);
+    const currentYear = parseInt(document.getElementById('currentYear').value);
+    const age = currentYear - birthYear;
+    document.getElementById('ageResult').value = age >= 0 ? age : "Invalid Input";
+  }
+
+  // Basic Calculator functions
+  function appendToDisplay(value) {
+    document.calc.txt.value += value;
+  }
+
+  function clearDisplay() {
+    document.calc.txt.value = '';
+  }
+
+  function calculate() {
+    document.calc.txt.value = eval(document.calc.txt.value);
+  }
+
+  // Event listener for keyboard input
+  document.addEventListener('keydown', function(event) {
+    if (event.key.match(/[0-9\+\-\*\/\.]/)) {
+      document.calc.txt.value += event.key;
+    } else if (event.key === 'Enter') {
+      calculate();
+    } else if (event.key === 'Escape') {
+      clearDisplay();
+    } else if (event.key === 'Backspace') {
+      document.calc.txt.value = document.calc.txt.value.slice(0, -1);
+    }
+  });
+</script>
+</body>
+</html>
